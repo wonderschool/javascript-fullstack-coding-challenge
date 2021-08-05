@@ -17,9 +17,10 @@ do not hesitate to email engineering@wonderschool.com.
 
 The coding challenge revolves around building a task list. Tasks belong to groups and can have
 dependencies on one another (i.e. if task X depends on task Y, task X cannot be completed until
-task Y is completed). The challenge includes 2 components:
+task Y is completed). The challenge includes 3 components:
 
 * Build React-based UI
+* Complete a backend interface
 * Design database schema
 
 ### Build React-based UI
@@ -36,18 +37,22 @@ The screens should look like this:
 
 ![screen design](https://user-images.githubusercontent.com/314351/56453206-d1ec2580-62f3-11e9-83d7-67aff2e1deef.png)
 
-The data you should use to populate your implementation is available at _public/data.json_ and can 
-be loaded from http://localhost:3000/data.json. SVG assets for the icons used in the design 
-also live in _public/_ and can be loaded similarly.
+The data you should use to implement your solution is available at a `GQL Query` called `tasks`, you can find it on _./client/src/graphql/getTasks.graphql_.
+SVG assets for the icons used in the design live in _./client/public/_.
 
 Some things to keep in mind:
 
 * Locked tasks cannot have their completion status toggled
 * Tasks remain locked until all of their dependencies have been completed
+* When clicking the box to complete a task, you must use the `toggleTask` mutation. 
 * Your implementation should resemble the above design
 * **Please don't introduce any new dependencies**, you should have everything you need to complete
   the challenge
 * We value well structured code that follows best practices
+
+### Complete a backend interface
+
+As mentioned above, you will need to use the `toggleTask` mutation to complete/un-complete a task. To accomplish this, you will need to implement the backend logic for toggling the task.
 
 ### Design Database Schema
 
@@ -57,18 +62,25 @@ to store the task list data.
 
 ## Getting Started
 
-To get started, clone this repo to your local machine. Next you'll want to install the dependencies
-and fire up the app:
+- To get started, clone this repo to your local machine.
+- Next you'll want to install the dependencies and run the client and server (we recommend using `node: v14.15.4`):
 
-```
-npm install
-npm start
-```
+    ```bash
+    cd server
+    yarn install
+    yarn dev
+   ```
+   open other terminal on the root of this project
+   ```bash
+   cd client
+   yarn install
+   yarn start
+   ```
 
-At this point, the app should be running in development mode and any local modifications you make
-will be automatically detected and result in the app to reload.
+At this point, the client and server should be running in development mode and any local modifications you make
+will be automatically detected and result in reloads.
 
-You should only need to add/modify code in the _src/_ directory.
+You should only need to add/modify code in the _./client/src/_ and _./server/src/_ directory.
 
 ## Submission
 
