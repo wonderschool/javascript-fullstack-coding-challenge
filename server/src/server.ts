@@ -5,6 +5,7 @@ import { GQLContext } from './GQLContext'
 import { TasksAPI } from './dataSources/tasks/tasksAPI'
 import { taskResolver, tasksQueryResolvers } from './resolvers/taskResolver'
 
+import cors from 'cors'
 import express from 'express'
 
 const typeDefs = importSchema("./src/schema.graphql")
@@ -18,6 +19,8 @@ const resolvers: Resolvers = {
 
 const app = express()
 
+app.use(cors({credentials: true}))
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -30,9 +33,9 @@ const server = new ApolloServer({
 server.start().then( _response => {
   server.applyMiddleware({ app })
 
-  app.listen({ port: 3000 }, () =>
+  app.listen({ port: 4000 }, () =>
     console.log(
-      `🚀 GraphQL Server ready at http://localhost:3000${server.graphqlPath}`
+      `🚀 GraphQL Server ready at http://localhost:4000${server.graphqlPath}`
     )
   )
 })
