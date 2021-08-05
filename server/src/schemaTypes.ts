@@ -5,6 +5,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,6 +13,16 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  toggleTask: Scalars['Boolean'];
+};
+
+
+export type MutationToggleTaskArgs = {
+  toggleTaskInput: ToggleTaskInput;
 };
 
 export type Query = {
@@ -25,6 +36,11 @@ export type Task = {
   group: Scalars['String'];
   task: Scalars['String'];
   dependencyIds: Array<Maybe<Scalars['Int']>>;
+  completedAt?: Maybe<Scalars['String']>;
+};
+
+export type ToggleTaskInput = {
+  taksId: Scalars['Int'];
   completedAt?: Maybe<Scalars['String']>;
 };
 
@@ -98,20 +114,28 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  Mutation: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   Task: ResolverTypeWrapper<TaskModel>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  ToggleTaskInput: ToggleTaskInput;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  Mutation: {};
+  Boolean: Scalars['Boolean'];
   Query: {};
   Task: TaskModel;
   Int: Scalars['Int'];
   String: Scalars['String'];
-  Boolean: Scalars['Boolean'];
+  ToggleTaskInput: ToggleTaskInput;
+}>;
+
+export type MutationResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  toggleTask?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleTaskArgs, 'toggleTaskInput'>>;
 }>;
 
 export type QueryResolvers<ContextType = GQLContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -128,6 +152,7 @@ export type TaskResolvers<ContextType = GQLContext, ParentType extends Resolvers
 }>;
 
 export type Resolvers<ContextType = GQLContext> = ResolversObject<{
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Task?: TaskResolvers<ContextType>;
 }>;

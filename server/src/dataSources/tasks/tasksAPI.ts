@@ -1,9 +1,21 @@
 import { TaskModel } from '../../models/TaskModel'
-import { TASKS_LIST } from './tasksData'
+import { TasksData } from './tasksData'
 import { DataSource } from 'apollo-datasource'
+import { ToggleTaskInput } from '../../schemaTypes'
 
 export class TasksAPI extends DataSource {
+  taskData: TasksData
+
+  constructor() {
+    super()
+    this.taskData = new TasksData()
+  }
+
   getTasks(): Promise<TaskModel[]> {
-    return Promise.resolve([...TASKS_LIST])
+    return this.taskData.getTasks()
+  }
+
+  toggleTask(_toggleTaskInput: ToggleTaskInput): Promise<boolean> {
+    return Promise.resolve(true)
   }
 }

@@ -3,7 +3,7 @@ import { importSchema } from "graphql-import";
 import { Resolvers } from './schemaTypes'
 import { GQLContext } from './GQLContext'
 import { TasksAPI } from './dataSources/tasks/tasksAPI'
-import { taskResolver, tasksQueryResolvers } from './resolvers/taskResolver'
+import { taskResolver, tasksQueryResolvers, tasksMutationResolvers } from './resolvers/taskResolver'
 
 import cors from 'cors'
 import express from 'express'
@@ -14,6 +14,9 @@ const resolvers: Resolvers = {
   Task: taskResolver,
   Query: {
     ...tasksQueryResolvers
+  },
+  Mutation: {
+    ...tasksMutationResolvers
   }
 }
 

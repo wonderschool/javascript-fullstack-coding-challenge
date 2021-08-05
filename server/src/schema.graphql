@@ -6,8 +6,16 @@ type Task {
   completedAt: String
 }
 
-# GQL Queries and Mutations
+input ToggleTaskInput {
+  taksId: Int!
+  completedAt: String
+}
 
+# GQL Queries and Mutations
 type Query {
   tasks: [Task!]!
+}
+
+type Mutation {
+  toggleTask(toggleTaskInput: ToggleTaskInput!): Boolean!
 }

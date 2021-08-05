@@ -1,6 +1,7 @@
 import { TaskModel } from '../../models/TaskModel'
+import { wait } from '../../utils'
 
-export const TASKS_LIST: TaskModel[] = [
+let TASKS_LIST: TaskModel[] = [
   {
     id: 1,
     group: "Purchases",
@@ -80,3 +81,19 @@ export const TASKS_LIST: TaskModel[] = [
     completedAt: "2021-08-04"
   }
 ]
+
+export class TasksData {
+  tasks: TaskModel[]
+
+  constructor() {
+    this.tasks = TASKS_LIST
+  }
+
+  async getTasks(): Promise<TaskModel[]> {
+    return wait(500).then(() => this.tasks)
+  }
+
+  async toggleTask(): Promise<boolean> {
+    return Promise.resolve(true) 
+  }
+}
